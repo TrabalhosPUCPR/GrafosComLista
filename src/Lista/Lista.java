@@ -3,8 +3,8 @@ package Lista;
 import java.util.Objects;
 
 public class Lista {
-    Node firstNode;
-    Node lastNode;
+    Node<?> firstNode;
+    Node<?> lastNode;
     int size;
 
     public Lista() {
@@ -17,7 +17,7 @@ public class Lista {
         return firstNode == null;
     }
 
-    public void add(Node node){
+    public void add(Node<?> node){
         if(checkEmpty()){
             firstNode = node;
         }else{
@@ -28,8 +28,8 @@ public class Lista {
         lastNode = node;
     }
 
-    public void add(String value){
-        Node newNode = new Node(value, null, lastNode);
+    public void add(Object value){
+        Node<Object> newNode = new Node<Object>(value, null, lastNode);
         if(checkEmpty()){
             firstNode = newNode;
         }else{
@@ -39,7 +39,7 @@ public class Lista {
         lastNode = newNode;
     }
 
-    public Node get(int index){
+    public Node<?> get(int index){
         if(checkEmpty() || index >= size) return null;
         if (index == size - 1) {
             return lastNode;
@@ -47,7 +47,7 @@ public class Lista {
         if(index == 0) {
             return firstNode;
         }
-        Node p = firstNode;
+        Node<?> p = firstNode;
         for(int i = 0; p != null; i++){
             if(i == index){
                 return p;
@@ -65,7 +65,7 @@ public class Lista {
         if(node.equals(lastNode.value)) {
             return size - 1;
         }
-        Node p = firstNode;
+        Node<?> p = firstNode;
         for(int i = 0; p != null; i++){
             if(node.equals(p.value)){
                 return i;
@@ -75,20 +75,20 @@ public class Lista {
         return -1;
     }
 
-    public void set(int index, String value){
+    public void set(int index, Object value){
         if(checkEmpty() || index >= size) return;
         if (index == size - 1) {
-            lastNode.value = value;
+            lastNode.setValue(value);
             return;
         }
         if(index == 1) {
-            firstNode.value = value;
+            firstNode.setValue(value);
             return;
         }
-        Node p = firstNode;
+        Node<?> p = firstNode;
         for(int i = 0; p != null; i++){
             if(i == index){
-                p.value = value;
+                p.setValue(value);
                 return;
             }
             p = p.next;
@@ -110,10 +110,10 @@ public class Lista {
             firstNode = firstNode.next;
             firstNode.last = null;
         }else{
-            Node p = firstNode;
+            Node<?> p = firstNode;
             for(int i = 0; p != null; i++){
                 if(i == index){
-                    Node temp = p.next;
+                    Node<?> temp = p.next;
                     p = temp;
                     temp.last = p;
                     temp.last.next = p;
@@ -125,11 +125,11 @@ public class Lista {
         size--;
     }
 
-    public Node getFirstNode() {
+    public Node<?> getFirstNode() {
         return firstNode;
     }
 
-    public Node getLastNode() {
+    public Node<?> getLastNode() {
         return lastNode;
     }
 
@@ -137,8 +137,8 @@ public class Lista {
         return size;
     }
 
-    public boolean contains(String node){
-        Node p = firstNode;
+    public boolean contains(Object node){
+        Node<?> p = firstNode;
         while(p != null){
             if(p.value.equals(node)) return true;
             p = p.next;
@@ -148,9 +148,9 @@ public class Lista {
 
     public String[] getArray(){
         String[] array = new String[size];
-        Node p = firstNode;
+        Node<?> p = firstNode;
         for(int i = 0; p != null; i++){
-            array[i] = p.value;
+            array[i] = (String) p.value;
             p = p.next;
         }
         return array;
@@ -159,7 +159,7 @@ public class Lista {
     @Override
     public String toString() {
         String lista = "[";
-        Node p = firstNode;
+        Node<?> p = firstNode;
         for(int i = 0; p != null; i++){
             lista += p.value;
             if(p.next != null) lista += ", ";

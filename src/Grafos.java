@@ -19,8 +19,8 @@ public class Grafos {
         if (node.length() > cellWidth) cellWidth = node.length();
     }
 
-    public String getNode(int i) {
-        return nodes.get(i).getValue();
+    public Node<?> getNode(int i) {
+        return nodes.get(i);
     }
 
     public void setNode(String node, String newNode) {

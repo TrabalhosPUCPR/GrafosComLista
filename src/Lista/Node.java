@@ -1,19 +1,24 @@
 package Lista;
 
-public class Node {
-    String value;
-    Node next;
-    Node last;
+public class Node<T> {
+    T value;
+    Node<?> next;
+    Node<?> last;
     Lista subList;
 
     public Lista getSubList() {
         return subList;
     }
 
-    public String getValue() {
+    public T getValue() {
         return value;
     }
-    public Node(String valor, Node next, Node last) {
+
+    public void setValue(Object value) {
+        this.value = (T) value;
+    }
+
+    public Node(T valor, Node<?> next, Node<?> last) {
         this.value = valor;
         this.next = next;
         this.last = last;
@@ -22,7 +27,7 @@ public class Node {
     public int getPeso() {
         return 0;
     }
-    public Node getNext() {
+    public Node<?> getNext() {
         return next;
     }
 }
