@@ -128,23 +128,23 @@ public class Lista {
         }
         size--;
     }
-    public void remove(Object node){
-        if(checkEmpty()) return;
-        if(size == 1){
+    public void remove(Object node){ // remove o node pelo valor dele
+        if(checkEmpty()) return; // retorna direto se lista estiver vazia
+        if(size == 1){ // caso so tiver um elemento, deixa last e first node nulo e tamanho = 0
             lastNode = null;
             firstNode = null;
             size = 0;
             return;
         }
-        if (node.equals(lastNode.value)){
+        if (node.equals(lastNode.value)){ // se o node a ser removido for igual ao ultimo, remove direto o ultimo
             lastNode = lastNode.last;
             lastNode.next = null;
-        }else if(node.equals(firstNode.value)) {
+        }else if(node.equals(firstNode.value)) { // se o node for igual ao primeiro, remove o primeiro deireto
             firstNode = firstNode.next;
             firstNode.last = null;
         }else{
             Node<?> p = firstNode;
-            for(int i = 0; p != null; i++){
+            for(int i = 0; p != null; i++){ // passa pela lista inteira ate encontra o node para remover
                 if(node.equals(p.value)){
                     Node<?> temp = p.next;
                     p = temp;
