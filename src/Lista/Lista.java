@@ -1,13 +1,12 @@
 package Lista;
 
-import java.util.Objects;
-
 public class Lista {
-    Node<?> firstNode;
-    Node<?> lastNode;
+    // o anterior do primeiro node e o proximo do ultimo sao nulo
+    Node<?> firstNode; // vai armazena o primeiro node
+    Node<?> lastNode; // vai armazena o ultimo node
     int size;
 
-    public Lista() {
+    public Lista() { // inicia a lista
         this.firstNode = null;
         this.lastNode = null;
         this.size = 0;
@@ -15,21 +14,21 @@ public class Lista {
 
     private boolean checkEmpty(){
         return firstNode == null;
-    }
+    } // retorna verdadeiro caso o primeiro node for nulo (vazio)
 
     public void add(Node<?> node){
         if(checkEmpty()){
-            firstNode = node;
+            firstNode = node; // caso a lista estiver vazia, iguala o primeiro node ao node sendo adicionado
         }else{
-            lastNode.next = node;
-            node.last = lastNode;
+            lastNode.next = node; // faz o proximo do ulitmo node igual ao node sendo criado
+            node.last = lastNode; // faz o anterior do novo node ser igual ao ultimo node
         }
-        size++;
-        lastNode = node;
+        size++; // incrementa a variavel que guarda o tamanho da lista
+        lastNode = node; // se a lista estiver vazia ou nao, o ultimo node da lista se torna o node sendo adicionado
     }
 
-    public void add(Object value){
-        Node<Object> newNode = new Node<Object>(value, null, lastNode);
+    public void add(Object value){ // mesma coisa que o add de cima, ele so da override pra poder adicionar direto um node so pelo valor
+        Node<Object> newNode = new Node<Object>(value, null, lastNode); // ele cria o node aqui dai e ja faz o anterior dele ser o ultimo node
         if(checkEmpty()){
             firstNode = newNode;
         }else{
@@ -40,24 +39,40 @@ public class Lista {
     }
 
     public Node<?> get(int index){
-        if(checkEmpty() || index >= size) return null;
-        if (index == size - 1) {
+        if(checkEmpty() || index >= size) return null; // caso estiver vazio ou o index for maior que o tamanho da lista, retorna nulo
+        if (index == size - 1) { // se o index for o do ultimo, so retorna o ultimo direto
             return lastNode;
         }
-        if(index == 0) {
+        if(index == 0) { // se o index for o do primeiro, so retorna o primeiro direto
             return firstNode;
         }
         Node<?> p = firstNode;
-        for(int i = 0; p != null; i++){
+        for(int i = 0; p != null; i++){ // passa por todos os elementos da lista ate chegar no index desejado pra retorna o node
             if(i == index){
                 return p;
             }
             p = p.next;
         }
-        return null;
+        return null; // ele nunca vai chega aqui mas caso nao encontra o index retorna nulo
     }
 
-    public int getIndex(String node){
+    public Node<?> get(Object node){
+        if(checkEmpty()) return null; // caso estiver vazio ou o index for maior que o tamanho da lista, retorna nulo
+        if (node.equals(lastNode.value)) { // se o index for o do ultimo, so retorna o ultimo direto
+            return lastNode;
+        }
+        if(node.equals(firstNode.value)) { // se o index for o do primeiro, so retorna o primeiro direto
+            return firstNode;
+        }
+        for(Node<?> p = firstNode; p != null; p=p.next){ // passa por todos os elementos da lista ate chegar no index desejado pra retorna o node
+            if(node.equals(p.value)) {
+                return p;
+            }
+        }
+        return null; // ele nunca vai chega aqui mas caso nao encontra o index retorna nulo
+    }
+
+    public int getIndex(Object node){ // faz a mesma coisa q os ultimos dois, mas retorna o index do node
         if(checkEmpty()) return -1;
         if (node.equals(firstNode.value)) {
             return 0;
@@ -75,24 +90,13 @@ public class Lista {
         return -1;
     }
 
-    public void set(int index, Object value){
-        if(checkEmpty() || index >= size) return;
-        if (index == size - 1) {
-            lastNode.setValue(value);
-            return;
-        }
-        if(index == 1) {
-            firstNode.setValue(value);
-            return;
-        }
-        Node<?> p = firstNode;
-        for(int i = 0; p != null; i++){
-            if(i == index){
-                p.setValue(value);
-                return;
-            }
-            p = p.next;
-        }
+    public void set(int index, Object value){ // pega o node pelo index e seta um novo valor
+        Node p = get(index);
+        p.setValue(value);
+    }
+    public void set(Object node, Object value){ // igual ao ultimo mas pega pelo valor
+        Node p = get(node);
+        p.setValue(value);
     }
 
     public void remove(int index){
@@ -113,6 +117,35 @@ public class Lista {
             Node<?> p = firstNode;
             for(int i = 0; p != null; i++){
                 if(i == index){
+                    Node<?> temp = p.next;
+                    p = temp;
+                    temp.last = p;
+                    temp.last.next = p;
+                    break;
+                }
+                p = p.next;
+            }
+        }
+        size--;
+    }
+    public void remove(Object node){
+        if(checkEmpty()) return;
+        if(size == 1){
+            lastNode = null;
+            firstNode = null;
+            size = 0;
+            return;
+        }
+        if (node.equals(lastNode.value)){
+            lastNode = lastNode.last;
+            lastNode.next = null;
+        }else if(node.equals(firstNode.value)) {
+            firstNode = firstNode.next;
+            firstNode.last = null;
+        }else{
+            Node<?> p = firstNode;
+            for(int i = 0; p != null; i++){
+                if(node.equals(p.value)){
                     Node<?> temp = p.next;
                     p = temp;
                     temp.last = p;

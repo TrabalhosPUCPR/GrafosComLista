@@ -24,14 +24,14 @@ public class Grafos {
     }
 
     public void setNode(String node, String newNode) {
-        nodes.set(nodes.getIndex(node), newNode);
+        nodes.set(node, newNode);
         if (newNode.length() > cellWidth) cellWidth = newNode.length();
     }
 
     public void createAdjacencia(String node1, String node2, int peso) {
         try{
             if(!nodes.contains(node2)) throw new Exception();
-            Lista sublist = nodes.get(nodes.getIndex(node1)).getSubList();
+            Lista sublist = nodes.get(node1).getSubList();
             sublist.add(new NodeAdjacencia(node2, null, null, peso));
         }catch (Exception e) {
             System.out.println("Node nao encontrado!");
@@ -41,15 +41,15 @@ public class Grafos {
     public void removeAdjacencia(String node1, String node2) {
         try{
             if(!nodes.contains(node2)) throw new Exception();
-            Lista sublist = nodes.get(nodes.getIndex(node1)).getSubList();
-            sublist.remove(sublist.getIndex(node2));
+            Lista sublist = nodes.get(node1).getSubList();
+            sublist.remove(node2);
         }catch (Exception e) {
             System.out.println("Node nao encontrado!");
         }
     }
 
     public int getAdjacencias(String node, ArrayList<String> adjacentes) {
-        String[] list = nodes.get(nodes.getIndex(node)).getSubList().getArray();
+        String[] list = nodes.get(node).getSubList().getArray();
         adjacentes.addAll(Arrays.asList(list));
         return list.length;
     }
