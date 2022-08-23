@@ -6,6 +6,8 @@ public class Node<T> {
     Node<?> last;
     Lista subList;
 
+    int peso;
+
     public Lista getSubList() {
         return subList;
     }
@@ -24,8 +26,15 @@ public class Node<T> {
         this.last = last;
         this.subList = new Lista();
     }
+    public Node(T valor, Node<?> next, Node<?> last, int peso) {
+        this.value = valor;
+        this.next = next;
+        this.last = last;
+        this.subList = new Lista();
+        this.peso = peso;
+    }
     public int getPeso() {
-        return 0;
+        return this.peso;
     }
     public Node<?> getNext() {
         return next;

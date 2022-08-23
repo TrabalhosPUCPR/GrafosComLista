@@ -3,7 +3,6 @@ import Lista.Lista;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import Lista.NodeAdjacencia;
 import Lista.Node;
 
 public class Grafos {
@@ -29,7 +28,7 @@ public class Grafos {
         try{
             if(!nodes.contains(node2)) throw new Exception(); // caso o node2 nao existi no grafo, da erro
             Lista sublist = nodes.get(node1).getSubList(); // pega a lista de adjacencias do node, se o node1 nao existe da erro
-            sublist.add(new NodeAdjacencia(node2, null, null, peso)); // adiciona na lista de adjacencias o node a ser conectado
+            sublist.add(new Node<Object>(node2, null, null, peso)); // adiciona na lista de adjacencias o node a ser conectado
         }catch (Exception e) {
             System.out.println("Node nao encontrado!"); // printa qnd der erro
         }
@@ -52,11 +51,11 @@ public class Grafos {
     }
 
     public void printAdjacencias(){
-        Node node = nodes.getFirstNode();
+        Node<?> node = nodes.getFirstNode();
         System.out.println("Todas as adjacencias: ( [valor, peso] )");
         while(node != null){ // passa por todos os nodes printando o valor dele e suas adjacencias com o peso
             System.out.print(node.getValue() + ": ");
-            Node subNode = node.getSubList().getFirstNode();
+            Node<?> subNode = node.getSubList().getFirstNode();
             while(subNode != null){
                 System.out.print("[" + subNode.getValue() + ", " + subNode.getPeso() + "] ");
                 subNode = subNode.getNext();
